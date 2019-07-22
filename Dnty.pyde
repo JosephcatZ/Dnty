@@ -2,6 +2,7 @@ global mouseX
 global mouseY
 global x
 x = 0
+surface = this.surface
 selected = None
 chars =[]
 xfac = None
@@ -9,26 +10,31 @@ yfac = None
 def keydown(Key):
     return(key == Key or key == Key.upper())
 def setup():
+    global surface
+    print(surface)
     global tsize 
     tsize = 50    
 cooldown = 100    
 
 def draw():
+    global surface
+    surface = this.surface
     global cooldown
     global xfac
     global yfac
     global selected
     global x
     if x == 0:
+        
         global mouseon
         def mouseon(x,y,xs,ys):
             return(mouseX <= xs and mouseX >= x and mouseY <= ys and mouseY >= y)
         class char:
             def __init__(self, name, HP, img, CLASS, SIZE, id):
-                self.xp = 0
-                self.yp = 0
+                self.xp = width/4
+                self.yp = height/4
                 self.SIZE = SIZE
-                self.name = name
+                self.Name = name
                 self.HP = HP
                 self.img = img
                 self.CLASS = CLASS
@@ -39,7 +45,6 @@ def draw():
         dog = char("john", 100, "x.png", "archer", 50, 0)
         print("l") 
         x = 2
-        
     else:
         fill(255)
         background(255)
@@ -61,6 +66,7 @@ def draw():
             textSize(10)
             textAlign(CENTER)
             text(str(i.HP), i.xp+i.SIZE/2,i.yp+i.SIZE+15)
+            text(str(i.Name), i.xp+i.SIZE/2,i.yp-5)
             stroke(0)
         if mousePressed:
             for i in chars:
@@ -95,6 +101,26 @@ def draw():
                 elif keydown('k'):
                     if cooldown == 0:
                         selected.HP += -10
+                        print(selected.HP)
+                        cooldown = 1
+                elif keydown('u'):
+                    if cooldown == 0:
+                        selected.HP += 100
+                        print(selected.HP)
+                        cooldown = 1
+                elif keydown('j'):
+                    if cooldown == 0:
+                        selected.HP += -100
+                        print(selected.HP)
+                        cooldown = 1
+                elif keydown('o'):
+                    if cooldown == 0:
+                        selected.HP += 1
+                        print(selected.HP)
+                        cooldown = 1
+                elif keydown('l'):
+                    if cooldown == 0:
+                        selected.HP += -1
                         print(selected.HP)
                         cooldown = 1
                 else:
